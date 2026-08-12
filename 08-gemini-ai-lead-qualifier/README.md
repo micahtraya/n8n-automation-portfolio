@@ -6,7 +6,7 @@ This project demonstrates how to connect a webhook to Google Gemini and Gmail to
 
 ---
 
-## 🚀 Workflow
+##  Workflow
 
 ```text
 Webhook
@@ -24,13 +24,13 @@ Gmail
 Respond to Webhook
 ```
 
-### 📸 Workflow Screenshot
+###  Workflow Screenshot
 
 <img width="853" height="529" alt="image" src="https://github.com/user-attachments/assets/d0f83640-f4d6-4e89-8bee-209cce40eef3" />
 
 ---
 
-## 🎯 Objective
+##  Objective
 
 The goal of this project is to automate customer inquiry handling using AI.
 
@@ -38,7 +38,7 @@ Instead of manually reviewing and responding to every customer message, the work
 
 ---
 
-## 📥 Input
+##  Input
 
 The workflow receives customer information through a **Webhook** using a `POST` request.
 
@@ -55,7 +55,7 @@ The workflow receives customer information through a **Webhook** using a `POST` 
 
 ---
 
-## 🤖 AI Processing
+##  AI Processing
 
 The Google Gemini node receives the customer information and generates a professional response.
 
@@ -68,7 +68,7 @@ The AI prompt instructs Gemini to:
 
 ---
 
-## 📤 Output
+##  Output
 
 After Gemini generates the response, the Gmail node automatically sends it to the customer.
 
@@ -90,7 +90,7 @@ The `SENT` label confirms that the email was successfully sent.
 
 ---
 
-## 🧩 Technologies Used
+##  Technologies Used
 
 * **n8n** — Workflow automation
 * **Google Gemini** — AI analysis and response generation
@@ -102,7 +102,7 @@ The `SENT` label confirms that the email was successfully sent.
 
 ---
 
-## 🔄 How It Works
+##  How It Works
 
 ### 1. Webhook
 
@@ -135,7 +135,7 @@ The workflow returns the result after the automation is completed.
 
 ---
 
-## 🧪 Testing
+##  Testing
 
 The workflow can be tested using **Postman**.
 
@@ -174,7 +174,7 @@ The Gmail node returns:
 
 ---
 
-## 💡 Example Use Cases
+##  Example Use Cases
 
 This automation can be used for:
 
@@ -189,7 +189,7 @@ This automation can be used for:
 
 ---
 
-## 📈 Skills Demonstrated
+##  Skills Demonstrated
 
 This project demonstrates experience with:
 
@@ -206,7 +206,7 @@ This project demonstrates experience with:
 
 ---
 
-## ⭐ Future Improvements
+##  Future Improvements
 
 Possible improvements for future versions:
 
@@ -221,7 +221,7 @@ Possible improvements for future versions:
 
 ---
 
-## 📌 Project Status
+##  Project Status
 
 **Status:** ✅ Completed
 
@@ -237,6 +237,6 @@ Possible improvements for future versions:
 
 ---
 
-## 👨‍💻 Portfolio
+##  Portfolio
 
 This project is part of my **n8n Automation Portfolio**, demonstrating practical experience building AI-powered automation workflows using Google Gemini, Gmail, webhooks, and automated customer communication.
