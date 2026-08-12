@@ -73,7 +73,7 @@ Instead of manually creating promotional captions, product information can be se
 * Returning structured data through a webhook response
 * Building reusable automation workflows
 
-## 📸 Workflow Screenshot
+##  Workflow Screenshot
 
 <img width="852" height="529" alt="image" src="https://github.com/user-attachments/assets/a7512019-aa40-47d1-afe7-dbfdf71cb3d6" />
 
