@@ -1,4 +1,4 @@
-# 📦 Warehouse Inventory Management
+# Project 5 - Warehouse Inventory Management ⭐⭐⭐⭐⭐⭐
 
 ## Overview
 
