@@ -1,4 +1,4 @@
-# 🔞 Project 1 — Age Checker Automation
+#  Project 1 — Age Checker Automation ⭐⭐⭐⭐⭐⭐
 
 A simple n8n webhook automation that receives a user's information and checks whether they meet a specified age requirement.
 
