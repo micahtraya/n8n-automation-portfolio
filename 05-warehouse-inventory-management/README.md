@@ -84,7 +84,7 @@ It can help businesses automatically evaluate inventory levels and prepare the d
 * Handling inventory information
 * Returning structured webhook responses
 
-## 📸 Workflow Screenshot
+##  Workflow Screenshot
 
 <img width="846" height="534" alt="image" src="https://github.com/user-attachments/assets/5c2aae30-1cb1-4397-946a-46e1d833b3c9" />
 
