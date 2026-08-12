@@ -1,4 +1,4 @@
-#  Social Media Advertisement Generator ⭐⭐⭐⭐⭐⭐
+# Project 2 - Social Media Advertisement Generator ⭐⭐⭐⭐⭐⭐
 
 ## Overview
 
