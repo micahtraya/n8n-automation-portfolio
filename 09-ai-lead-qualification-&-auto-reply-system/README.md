@@ -6,7 +6,7 @@ This project demonstrates how AI can be combined with data storage and email aut
 
 ---
 
-## 🚀 Workflow
+##  Workflow
 
 ```text
 Customer submits inquiry
@@ -42,7 +42,7 @@ Respond to customer
 
 ---
 
-## 🎯 Objective
+##  Objective
 
 The goal of this project is to automatically qualify potential customers and respond to their inquiries using AI.
 
@@ -50,7 +50,7 @@ Instead of manually reviewing every incoming lead, the workflow uses Google Gemi
 
 ---
 
-## 📥 Input
+##  Input
 
 The workflow receives customer information through a **Webhook** using a `POST` request.
 
@@ -67,7 +67,7 @@ The workflow receives customer information through a **Webhook** using a `POST` 
 
 ---
 
-## 🤖 AI Processing
+##  AI Processing
 
 The Google Gemini node analyzes the customer's inquiry and determines:
 
@@ -79,7 +79,7 @@ The AI evaluates the customer's message to determine how valuable or urgent the 
 
 ---
 
-## 📊 Google Sheets
+##  Google Sheets
 
 After Gemini processes the inquiry, the lead information is stored in **Google Sheets**.
 
@@ -99,7 +99,7 @@ AI Response
 
 ---
 
-## 📤 Output
+##  Output
 
 After the lead is analyzed and stored, Gmail automatically sends the AI-generated response to the customer.
 
@@ -121,7 +121,7 @@ The `SENT` label confirms that Gmail successfully sent the automated response.
 
 ---
 
-## 🧩 Technologies Used
+##  Technologies Used
 
 * **n8n** — Workflow automation
 * **Google Gemini** — AI lead analysis and response generation
@@ -134,7 +134,7 @@ The `SENT` label confirms that Gmail successfully sent the automated response.
 
 ---
 
-## 🔄 How It Works
+##  How It Works
 
 ### 1. Webhook
 
@@ -171,7 +171,7 @@ The workflow completes the automation and returns the result of the request.
 
 ---
 
-## 🧪 Testing
+##  Testing
 
 The workflow can be tested using **Postman**.
 
@@ -224,7 +224,7 @@ Email Sent ✅
 
 ---
 
-## 💡 Example Use Cases
+##  Example Use Cases
 
 This automation can be used for:
 
@@ -241,7 +241,7 @@ This automation can be used for:
 
 ---
 
-## 📈 Skills Demonstrated
+##  Skills Demonstrated
 
 This project demonstrates experience with:
 
@@ -261,7 +261,7 @@ This project demonstrates experience with:
 
 ---
 
-## ⭐ Future Improvements
+##  Future Improvements
 
 Possible improvements for future versions:
 
@@ -278,7 +278,7 @@ Possible improvements for future versions:
 
 ---
 
-## 📌 Project Status
+##  Project Status
 
 **Status:** ✅ Completed
 
