@@ -1,4 +1,4 @@
-# 🚀 Project 9 — AI Lead Qualification & Auto-Reply System ⭐⭐⭐⭐⭐⭐
+#  Project 9 — AI Lead Qualification & Auto-Reply System ⭐⭐⭐⭐⭐⭐
 
 An n8n automation workflow that uses **Google Gemini AI** to analyze potential customer inquiries, determine the lead type and priority, store the lead information in **Google Sheets**, and automatically send a response through **Gmail**.
 
