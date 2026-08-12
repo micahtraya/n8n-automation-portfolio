@@ -83,7 +83,7 @@ Instead of manually reviewing every incoming request, the automation can immedia
 * Generating estimated response times
 * Returning structured webhook responses
 
-## 📸 Workflow Screenshot
+##  Workflow Screenshot
 
 <img width="849" height="528" alt="image" src="https://github.com/user-attachments/assets/bfc79764-766e-434a-9cd5-7f20bf264d7f" />
 
