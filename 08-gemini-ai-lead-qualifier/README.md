@@ -1,4 +1,4 @@
-# Project 8 — Gemini AI Lead Qualifier 🤖 ⭐⭐⭐⭐⭐⭐
+# Project 8 — Gemini AI Lead Qualifier  ⭐⭐⭐⭐⭐⭐
 
 An n8n automation workflow that uses **Google Gemini AI** to automatically analyze customer inquiries and send an AI-generated response through Gmail.
 
