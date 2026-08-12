@@ -1,4 +1,4 @@
-# 📱 Social Media Advertisement Generator
+#  Social Media Advertisement Generator ⭐⭐⭐⭐⭐⭐
 
 ## Overview
 
