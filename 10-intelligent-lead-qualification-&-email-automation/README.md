@@ -1,4 +1,4 @@
-# 🚀 Project 10 — Intelligent Lead Qualification & Email Automation ⭐⭐⭐⭐⭐⭐⭐
+#  Project 10 — Intelligent Lead Qualification & Email Automation ⭐⭐⭐⭐⭐⭐⭐
 
 A client-style n8n automation workflow that uses **Google Gemini AI** to analyze incoming leads, classify them as **Hot, Warm, or Cold**, route them through different workflow paths, merge the results, and automatically send a personalized email response.
 
