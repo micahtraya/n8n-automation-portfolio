@@ -1,4 +1,4 @@
-# 🏖️ Leave Request Approval Automation
+# Project 4 - Leave Request Approval Automation ⭐⭐⭐⭐⭐⭐
 
 ## Overview
 
