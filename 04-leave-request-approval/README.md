@@ -81,7 +81,7 @@ It can help HR teams automatically evaluate leave requests and provide consisten
 * Handling approved and rejected requests
 * Returning structured webhook responses
 
-## 📸 Workflow Screenshot
+##  Workflow Screenshot
 
 <img width="840" height="537" alt="image" src="https://github.com/user-attachments/assets/f896f5a2-2584-4eb7-b417-6fa8cc87095b" />
 
