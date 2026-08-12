@@ -6,13 +6,13 @@ This project demonstrates a foundational real-world automation scenario involvin
 
 ---
 
-## 🚀 Workflow
+##  Workflow
 
 Webhook → IF → Allowed / Not Allowed → Respond to Webhook
 
 ---
 
-## 🎯 Objective
+##  Objective
 
 The goal of this project is to build a simple age verification automation.
 
@@ -22,7 +22,7 @@ This demonstrates how conditional logic can be used to make decisions inside an 
 
 ---
 
-## 📥 Input
+##  Input
 
 The workflow receives the user's information through a **Webhook** using a `POST` request.
 
@@ -35,7 +35,7 @@ The workflow receives the user's information through a **Webhook** using a `POST
 
 ---
 
-## 🔀 Age Verification Logic
+##  Age Verification Logic
 
 The **IF** node checks whether the user's age meets the required age of 18.
 
@@ -57,7 +57,7 @@ Users who are **under 18** follow the Not Allowed path.
 
 ---
 
-## 📤 Output
+##  Output
 
 For this test, the user's age was **15**, so the workflow followed the **Not Allowed** path.
 
@@ -78,7 +78,7 @@ For this test, the user's age was **15**, so the workflow followed the **Not All
 
 ---
 
-## 🔄 How It Works
+##  How It Works
 
 ### 1. Webhook
 
@@ -115,7 +115,7 @@ Returns the appropriate result after the age verification is completed.
 
 ---
 
-## 🧪 Testing
+##  Testing
 
 The workflow can be tested using **Postman**.
 
@@ -157,14 +157,14 @@ The workflow can be tested using **Postman**.
 
 ---
 
-## 📸 Workflow Screenshot
+##  Workflow Screenshot
 
 <img width="1166" height="606" alt="1" src="https://github.com/user-attachments/assets/35f063a7-572e-4fc3-80e5-2c1d6e267e79" />
 
 
 ---
 
-## 🧩 Technologies Used
+##  Technologies Used
 
 - **n8n** — Workflow automation
 - **Webhook** — Receives user information
@@ -175,7 +175,7 @@ The workflow can be tested using **Postman**.
 
 ---
 
-## 💡 Example Use Cases
+##  Example Use Cases
 
 This automation can be used for:
 
@@ -190,7 +190,7 @@ This automation can be used for:
 
 ---
 
-## 📈 Skills Demonstrated
+##  Skills Demonstrated
 
 This project demonstrates experience with:
 
@@ -207,7 +207,7 @@ This project demonstrates experience with:
 
 ---
 
-## ⭐ Future Improvements
+##  Future Improvements
 
 Possible improvements for future versions:
 
@@ -222,7 +222,7 @@ Possible improvements for future versions:
 
 ---
 
-## 📌 Project Status
+##  Project Status
 
 **Status:** ✅ Completed
 
@@ -236,6 +236,6 @@ Possible improvements for future versions:
 
 ---
 
-## 👨‍💻 Portfolio
+##  Portfolio
 
 This project is part of my **n8n Automation Portfolio**, demonstrating practical experience building webhook-based automation workflows using conditional logic, JSON data processing, API testing, and automated webhook responses.
