@@ -1,4 +1,4 @@
-# Project 6 - Smart Inventory Alert System
+# Project 6 - Smart Inventory Alert System ⭐⭐⭐⭐⭐⭐
 
 ## Overview
 
