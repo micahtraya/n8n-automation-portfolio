@@ -38,7 +38,8 @@ Webhook → IF → Allowed / Not Allowed → Respond to Webhook
 
 ## 📸 Workflow Screenshot
 
-![Age Checker Workflow](https://github.com/user-attachments/assets/96b6eebe-f062-4cbb-9b96-2e641cb1cfce)
+<img width="1166" height="606" alt="1" src="https://github.com/user-attachments/assets/23efbf8d-1298-45b7-9dc6-02bca2a13055" />
+
 
 ## Tools
 
