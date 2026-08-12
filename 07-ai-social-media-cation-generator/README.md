@@ -6,7 +6,7 @@ This project demonstrates how to connect a webhook to an AI model and transform 
 
 ---
 
-## 🚀 Workflow
+##  Workflow
 
 ```text
 Webhook
@@ -21,13 +21,13 @@ Generate Caption
 Respond to Webhook
 ```
 
-### 📸 Workflow Screenshot
+###  Workflow Screenshot
 
 <img width="859" height="520" alt="image" src="https://github.com/user-attachments/assets/f366f474-0d34-42b2-9770-563df7c7930c" />
 
 ---
 
-## 🎯 Objective
+##  Objective
 
 The goal of this project is to automate the creation of short, engaging product captions for social media platforms such as:
 
@@ -40,7 +40,7 @@ Instead of manually writing a caption for every product, the workflow sends the 
 
 ---
 
-## 📥 Input
+##  Input
 
 The workflow receives product information through a **Webhook** using a `POST` request.
 
@@ -55,7 +55,7 @@ The workflow receives product information through a **Webhook** using a `POST` r
 
 ---
 
-## 🤖 AI Processing
+##  AI Processing
 
 The OpenAI node receives the product information and generates a short promotional caption.
 
@@ -71,7 +71,7 @@ The AI prompt instructs the model to:
 
 ---
 
-## 📤 Output
+##  Output
 
 ### Example Output
 
@@ -83,7 +83,7 @@ The AI prompt instructs the model to:
 
 ---
 
-## 🧩 Technologies Used
+##  Technologies Used
 
 * **n8n** — Workflow automation
 * **Webhook** — Receives product information
@@ -93,7 +93,7 @@ The AI prompt instructs the model to:
 
 ---
 
-## 🔄 How It Works
+##  How It Works
 
 ### 1. Webhook
 
@@ -122,7 +122,7 @@ The workflow returns the generated caption as a response.
 
 ---
 
-## 🧪 Testing
+##  Testing
 
 The workflow can be tested using **Postman**.
 
@@ -153,7 +153,7 @@ POST
 
 ---
 
-## 💡 Example Use Cases
+##  Example Use Cases
 
 This automation can be used for:
 
@@ -166,7 +166,7 @@ This automation can be used for:
 
 ---
 
-## 📈 Skills Demonstrated
+##  Skills Demonstrated
 
 This project demonstrates experience with:
 
@@ -182,7 +182,7 @@ This project demonstrates experience with:
 
 ---
 
-## ⭐ Future Improvements
+##  Future Improvements
 
 Possible improvements for future versions:
 
@@ -197,7 +197,7 @@ Possible improvements for future versions:
 
 ---
 
-## 📌 Project Status
+##  Project Status
 
 **Status:** ✅ Completed
 
@@ -209,6 +209,6 @@ Possible improvements for future versions:
 
 ---
 
-## 👨‍💻 Portfolio
+##  Portfolio
 
 This project is part of my **n8n Automation Portfolio**, demonstrating practical experience building AI-powered automation workflows.
