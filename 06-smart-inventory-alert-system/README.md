@@ -80,7 +80,7 @@ It can reduce the need for manually checking inventory and help businesses respo
 * Sending automated email alerts
 * Working with Gmail message responses
 
-## 📸 Workflow Screenshot
+##  Workflow Screenshot
 
 <img width="852" height="530" alt="image" src="https://github.com/user-attachments/assets/f840e90d-22df-4451-b62d-1fcf65c014ec" />
 
