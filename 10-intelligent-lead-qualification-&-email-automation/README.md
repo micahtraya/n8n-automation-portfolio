@@ -6,7 +6,7 @@ This project demonstrates a more advanced real-world business automation scenari
 
 ---
 
-## 🚀 Workflow
+##  Workflow
 
 ```text id="h1w6j3"
 Webhook
@@ -39,14 +39,14 @@ Switch
             Respond to Webhook
 ```
 
-### 📸 Workflow Screenshot
+###  Workflow Screenshot
 
 <img width="844" height="529" alt="image" src="https://github.com/user-attachments/assets/0f7688f8-5afb-4a81-80ae-e1feb42b2bd1" />
 
 
 ---
 
-## 🎯 Objective
+##  Objective
 
 The goal of this project is to simulate a real-world client automation system for handling potential customers.
 
@@ -56,7 +56,7 @@ This demonstrates how AI can make business decisions inside an automated workflo
 
 ---
 
-## 📥 Input
+##  Input
 
 The workflow receives customer information through a **Webhook** using a `POST` request.
 
@@ -73,7 +73,7 @@ The workflow receives customer information through a **Webhook** using a `POST` 
 
 ---
 
-## 🤖 AI Processing
+##  AI Processing
 
 The Google Gemini node analyzes the customer's inquiry and determines:
 
@@ -93,7 +93,7 @@ The AI also generates a personalized response that can be sent directly to the c
 
 ---
 
-## 🔀 Lead Routing
+##  Lead Routing
 
 After Gemini analyzes the lead, the **Switch** node determines which path the lead should follow.
 
@@ -129,7 +129,7 @@ Cold Lead Path
 
 ---
 
-## 🔗 Merge
+##  Merge
 
 After the different lead paths are processed, the **Merge** node combines the results back into a single workflow path.
 
@@ -145,7 +145,7 @@ This allows all lead types to continue to the same Gmail automation step.
 
 ---
 
-## 📧 Gmail Automation
+##  Gmail Automation
 
 After the lead has been classified and processed, Gmail automatically sends the AI-generated response to the customer.
 
@@ -153,7 +153,7 @@ This allows the business to respond to potential customers without manually writ
 
 ---
 
-## 📤 Output
+##  Output
 
 For this test, Gemini classified the lead as a **Warm** lead with **Medium** priority.
 
@@ -183,7 +183,7 @@ Email: Sent ✅
 
 ---
 
-## 🔄 How It Works
+##  How It Works
 
 ### 1. Webhook
 
@@ -238,7 +238,7 @@ Returns the processed result after the automation is completed.
 
 ---
 
-## 🧪 Testing
+##  Testing
 
 The workflow can be tested using **Postman**.
 
@@ -290,7 +290,7 @@ Switch
 
 ---
 
-## 🧩 Technologies Used
+##  Technologies Used
 
 * **n8n** — Workflow automation
 * **Google Gemini** — AI lead analysis
@@ -304,7 +304,7 @@ Switch
 
 ---
 
-## 💡 Example Use Cases
+##  Example Use Cases
 
 This automation can be used for:
 
@@ -321,7 +321,7 @@ This automation can be used for:
 
 ---
 
-## 📈 Skills Demonstrated
+##  Skills Demonstrated
 
 This project demonstrates experience with:
 
@@ -343,7 +343,7 @@ This project demonstrates experience with:
 
 ---
 
-## ⭐ Future Improvements
+##  Future Improvements
 
 Possible improvements for future versions:
 
@@ -360,7 +360,7 @@ Possible improvements for future versions:
 
 ---
 
-## 📌 Project Status
+##  Project Status
 
 **Status:** ✅ Completed
 
@@ -378,6 +378,6 @@ Possible improvements for future versions:
 
 ---
 
-## 👨‍💻 Portfolio
+##  Portfolio
 
 This project is part of my **n8n Automation Portfolio**, demonstrating practical experience building client-style AI automation systems using Google Gemini, conditional routing, data processing, Gmail, webhooks, and multi-branch workflows.
