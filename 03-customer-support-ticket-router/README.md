@@ -1,93 +1,173 @@
-# Project 3 - Customer Support Ticket Router ⭐⭐⭐⭐⭐⭐
+# Project 3 — Customer Support Ticket Router
 
-## Overview
+An **n8n workflow** that automatically routes customer support tickets to the appropriate team based on the customer's selected department.
 
-A webhook-based n8n automation that receives customer support requests and automatically routes each ticket based on the department and issue.
-
-The workflow helps organize incoming customer inquiries by assigning the appropriate support team, determining ticket priority, estimating the response time, and setting the ticket status.
+The workflow receives a customer support request through a **Webhook**, checks the department, routes the ticket to the appropriate support team, and returns the ticket assignment and response information.
 
 ## Workflow
 
-**Webhook → Ticket Routing → Respond to Webhook**
+```text
+Webhook
+   │
+   ▼
+If
+   ├── True ─────────► Technical Support ───────┐
+   │                                            │
+   └── False ─► Is Billing?                     │
+                  ├── True ─► Billing Team ────┤
+                  │                             │
+                  └── False ► General Inquiry ─┤
+                                                ▼
+                                        Respond to Webhook
+```
+<img width="846" height="535" alt="3" src="https://github.com/user-attachments/assets/1798cc53-9714-49da-9d04-2f5f592f5427" />
 
-## How It Works
+## n8n Workflow Nodes
 
-1. The Webhook receives the customer's support request.
-2. The automation processes the customer's name, department, and issue.
-3. The ticket is routed to the appropriate support team.
-4. A priority level is assigned based on the issue.
-5. An estimated response time is determined.
-6. The ticket is marked with its current status.
-7. Respond to Webhook returns the structured ticket information.
+### 1. Webhook
+
+The workflow starts with a **Webhook** node that receives the customer's support ticket.
+
+The incoming request contains:
+
+* Customer name
+* Department
+* Issue
+
+### 2. If
+
+The first conditional node evaluates the incoming department and determines whether the request should be routed to **Technical Support**.
+
+* **True** → `technical support`
+* **False** → Continue to the billing check
+
+### 3. Is Billing?
+
+If the ticket is not routed to Technical Support, the workflow checks whether the department is **billing**.
+
+* **True** → `Billing Team`
+* **False** → `General Inquiry`
+
+### 4. Technical Support
+
+Tickets that match the technical-support condition are routed to the **Technical Support** branch.
+
+### 5. Billing Team
+
+Tickets identified as billing requests are routed to the **Billing Team**.
+
+### 6. General Inquiry
+
+Tickets that do not match the previous conditions are routed to **General Inquiry**.
+
+### 7. Respond to Webhook
+
+All routing branches connect to the **Respond to Webhook** node, which returns the ticket assignment and status information.
+
+---
 
 ## Input
 
+The workflow receives the following input through the Webhook:
+
 ```json
 {
-  "customer_name": "Alex",
-  "department": "general",
-  "issue": "What are your business hours?"
+  "body": {
+    "customer_name": "badetha",
+    "department": "billing",
+    "issue": "Refund request"
+  }
 }
 ```
+
+## Ticket Routing Logic
+
+For the provided input:
+
+```text
+Customer  = badetha
+Department = billing
+Issue      = Refund request
+```
+
+The ticket is identified as a **billing** request.
+
+Therefore, the workflow follows the:
+
+```text
+Billing Team
+```
+
+branch.
 
 ## Output
 
+The resulting customer support ticket information is:
+
 ```json
-{
-  "assigned_to": "Customer Service",
-  "priority": "Low",
-  "estimated_response": "24 Hours",
-  "status": "Open"
-}
+[
+  {
+    "assigned_to": "Billing Department",
+    "priority": "Medium",
+    "estimated_response": "4 Hours",
+    "status": "Open"
+  }
+]
 ```
+
+## Workflow Summary
+
+| Step | Node               | Purpose                                         |
+| ---- | ------------------ | ----------------------------------------------- |
+| 1    | Webhook            | Receives the customer support ticket            |
+| 2    | If                 | Checks the first routing condition              |
+| 3    | Technical Support  | Handles technical support requests              |
+| 4    | Is Billing?        | Checks whether the ticket is related to billing |
+| 5    | Billing Team       | Handles billing requests                        |
+| 6    | General Inquiry    | Handles other requests                          |
+| 7    | Respond to Webhook | Returns the ticket routing result               |
 
 ## Example
 
-**Customer:** Alex
-**Department:** General
-**Issue:** What are your business hours?
+### Request
 
-### Automated Result
+```json
+{
+  "body": {
+    "customer_name": "badetha",
+    "department": "billing",
+    "issue": "Refund request"
+  }
+}
+```
 
-* **Assigned To:** Customer Service
-* **Priority:** Low
-* **Estimated Response:** 24 Hours
-* **Status:** Open
+### Result
 
-## Use Case
+Because the department is **billing**, the workflow routes the ticket to the **Billing Team**.
 
-This automation can be useful for:
+### Response
 
-* Customer support teams
-* Online businesses
-* E-commerce stores
-* Service-based businesses
-* Help desk systems
+```json
+[
+  {
+    "assigned_to": "Billing Department",
+    "priority": "Medium",
+    "estimated_response": "4 Hours",
+    "status": "Open"
+  }
+]
+```
 
-Instead of manually reviewing every incoming request, the automation can immediately organize and route support tickets.
+## Technologies Used
 
-## Tools
+* **n8n**
+* **Webhook**
+* **IF Node**
+* **Conditional Routing**
+* **Respond to Webhook**
 
-* n8n
-* Webhook
-* JSON
-* Ticket Routing Logic
-* Respond to Webhook
+## Project Purpose
 
-## What I Learned
+This project demonstrates how **n8n conditional routing** can automate customer support ticket assignment.
 
-* Receiving customer support requests through a webhook
-* Processing structured JSON data
-* Building automated ticket-routing logic
-* Assigning ticket priorities
-* Generating estimated response times
-* Returning structured webhook responses
-
-##  Workflow Screenshot
-
-<img width="849" height="528" alt="image" src="https://github.com/user-attachments/assets/bfc79764-766e-434a-9cd5-7f20bf264d7f" />
-
-
-## Project Status
-
-✅ Completed and tested
+Instead of manually reviewing every ticket, the workflow evaluates the department and automatically directs the request to **Technical Support, Billing Team, or General Inquiry**, making the support process more organized and efficient.
