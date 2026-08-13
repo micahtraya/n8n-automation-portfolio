@@ -1,80 +1,103 @@
-# Project 8 — Gemini AI Lead Qualifier  ⭐⭐⭐⭐⭐⭐
+# Project 8 — AI Customer Support Assistant
 
-An n8n automation workflow that uses **Google Gemini AI** to automatically analyze customer inquiries and send an AI-generated response through Gmail.
+An **n8n workflow** that uses AI to assist with customer support requests and automatically send a response to the customer through email.
 
-This project demonstrates how to connect a webhook to Google Gemini and Gmail to create an automated customer support workflow.
+The workflow receives a customer's support request through a **Webhook**, prepares the information, sends it to an AI model to generate a suitable response, and then uses **Gmail** to send the generated message to the customer.
 
----
+## Workflow
 
-##  Workflow
-
-```text
+```text id="6o9wqv"
 Webhook
    │
    ▼
 Edit Fields
    │
    ▼
-Google Gemini
+Message a Model
    │
    ▼
-Gmail
+Send a Message
    │
    ▼
 Respond to Webhook
 ```
+<img width="867" height="534" alt="8" src="https://github.com/user-attachments/assets/0cee59c4-053d-43f9-b6af-958cd9ef673b" />
 
-###  Workflow Screenshot
+<img width="1072" height="498" alt="8a" src="https://github.com/user-attachments/assets/a72b96e3-c2d2-42aa-a214-b3e00eb442db" />
 
-<img width="853" height="529" alt="image" src="https://github.com/user-attachments/assets/d0f83640-f4d6-4e89-8bee-209cce40eef3" />
+
+## n8n Workflow Nodes
+
+### 1. Webhook
+
+The workflow starts with a **Webhook** node that receives the customer's support request.
+
+The incoming request contains:
+
+* Customer name
+* Customer email
+* Support subject
+* Customer message
+
+### 2. Edit Fields
+
+The **Edit Fields** node prepares the customer information and support request before passing it to the AI model.
+
+### 3. Message a Model
+
+The **Message a Model** node processes the customer's request using an AI model.
+
+The AI analyzes the issue and generates an appropriate customer support response.
+
+### 4. Send a Message
+
+The generated response is sent to the customer using the **Gmail** node.
+
+This allows the workflow to automatically communicate with the customer without requiring a support agent to manually write the initial response.
+
+### 5. Respond to Webhook
+
+After the email is sent, the workflow returns the execution result through the **Respond to Webhook** node.
 
 ---
 
-##  Objective
+## Input
 
-The goal of this project is to automate customer inquiry handling using AI.
+The workflow receives the following input through the Webhook:
 
-Instead of manually reviewing and responding to every customer message, the workflow sends the inquiry to Google Gemini, generates an appropriate response, and automatically sends it to the customer through Gmail.
-
----
-
-##  Input
-
-The workflow receives customer information through a **Webhook** using a `POST` request.
-
-### Example Input
-
-```json
+```json id="g6d3q8"
 {
-  "customer": "Micah",
-  "email": "micahtraya16@gmail.com",
-  "subject": "Wrong item received",
-  "message": "Hi, I ordered a wireless mouse but received a keyboard. Can you help me?"
+  "body": {
+    "customer": "Micah",
+    "email": "micahtraya16@gmail.com",
+    "subject": "Wrong item received",
+    "message": "Hi, I ordered a wireless mouse but received a keyboard. Can you help me?"
+  }
 }
 ```
 
----
+## AI Processing
 
-##  AI Processing
+For the provided input:
 
-The Google Gemini node receives the customer information and generates a professional response.
+```text id="0q6z3n"
+Customer = Micah
+Email    = micahtraya16@gmail.com
+Subject  = Wrong item received
+Issue    = Customer received a keyboard instead of a wireless mouse
+```
 
-The AI prompt instructs Gemini to:
+The customer message is passed to the AI model.
 
-* Analyze the customer's message
-* Understand the customer's issue
-* Determine the appropriate response
-* Provide a professional and helpful reply
+The AI is responsible for understanding the customer's issue and generating an appropriate support response.
 
----
+The generated response is then passed to the Gmail node for delivery.
 
-##  Output
+## Output
 
-After Gemini generates the response, the Gmail node automatically sends it to the customer.
+The provided workflow execution produced the following output:
 
-### Gmail Output
-
-```json
+```json id="v4m7x2"
 [
   {
     "id": "19fe1ea3c117bfbe",
@@ -86,157 +109,66 @@ After Gemini generates the response, the Gmail node automatically sends it to th
 ]
 ```
 
-The `SENT` label confirms that the email was successfully sent.
+The returned Gmail data confirms that the generated customer support message was sent successfully.
 
----
-
-##  Technologies Used
-
-* **n8n** — Workflow automation
-* **Google Gemini** — AI analysis and response generation
-* **Gmail** — Automated email delivery
-* **Webhook** — Receives customer information
-* **Edit Fields** — Data preparation and mapping
-* **Postman** — API testing
-* **JSON** — Data format
-
----
-
-##  How It Works
-
-### 1. Webhook
-
-The Webhook receives the customer's information.
-
-```json
-{
-  "customer": "Micah",
-  "email": "micahtraya16@gmail.com",
-  "subject": "Wrong item received",
-  "message": "Hi, I ordered a wireless mouse but received a keyboard. Can you help me?"
-}
-```
-
-### 2. Edit Fields
-
-The customer information is organized and prepared before being sent to Google Gemini.
-
-### 3. Google Gemini
-
-Gemini analyzes the customer inquiry and generates a professional response.
-
-### 4. Gmail
-
-The AI-generated response is automatically sent to the customer's email address.
-
-### 5. Respond to Webhook
-
-The workflow returns the result after the automation is completed.
-
----
-
-##  Testing
-
-The workflow can be tested using **Postman**.
+## Example
 
 ### Request
 
-**Method:**
-
-```text
-POST
-```
-
-### Example Body
-
-```json
+```json id="8j2p6r"
 {
-  "customer": "Micah",
-  "email": "micahtraya16@gmail.com",
-  "subject": "Wrong item received",
-  "message": "Hi, I ordered a wireless mouse but received a keyboard. Can you help me?"
+  "body": {
+    "customer": "Micah",
+    "email": "micahtraya16@gmail.com",
+    "subject": "Wrong item received",
+    "message": "Hi, I ordered a wireless mouse but received a keyboard. Can you help me?"
+  }
 }
 ```
 
-### Expected Result
+### Result
 
-The customer receives an AI-generated email response.
+The AI model processes the customer's complaint about receiving the wrong product and generates a customer support response.
 
-The Gmail node returns:
+The response is then sent to the customer's email address using Gmail.
 
-```json
-{
-  "labelIds": [
-    "SENT"
-  ]
-}
+### Response
+
+```json id="w5n1cs"
+[
+  {
+    "id": "19fe1ea3c117bfbe",
+    "threadId": "19fe1ea3c117bfbe",
+    "labelIds": [
+      "SENT"
+    ]
+  }
+]
 ```
 
----
+## Workflow Summary
 
-##  Example Use Cases
+| Step | Node               | Purpose                                      |
+| ---- | ------------------ | -------------------------------------------- |
+| 1    | Webhook            | Receives the customer support request        |
+| 2    | Edit Fields        | Prepares the customer and issue information  |
+| 3    | Message a Model    | Generates an AI-powered support response     |
+| 4    | Send a Message     | Sends the response to the customer via Gmail |
+| 5    | Respond to Webhook | Returns the email execution result           |
 
-This automation can be used for:
+## Technologies Used
 
-* Customer support
-* Lead qualification
-* E-commerce support
-* Automated email responses
-* Order issue handling
-* Customer inquiry management
-* Sales inquiries
-* AI-powered help desks
+* **n8n**
+* **Webhook**
+* **Edit Fields**
+* **AI Model**
+* **Gmail**
+* **Respond to Webhook**
 
----
+## Project Purpose
 
-##  Skills Demonstrated
+This project demonstrates how **AI and workflow automation can be combined to handle customer support requests**.
 
-This project demonstrates experience with:
+Instead of requiring a support agent to manually review every initial inquiry and compose a response, the workflow uses an AI model to understand the customer's issue and generate a response automatically.
 
-* n8n workflow automation
-* Google Gemini integration
-* Gmail automation
-* Webhook integration
-* JSON data handling
-* Dynamic data mapping
-* AI prompt engineering
-* API testing with Postman
-* Automated customer communication
-* Multi-step AI workflow design
-
----
-
-##  Future Improvements
-
-Possible improvements for future versions:
-
-* Save customer inquiries to Google Sheets
-* Store leads in Airtable
-* Add automatic lead scoring
-* Send high-priority notifications to Slack or Discord
-* Add human approval before sending emails
-* Create different AI response templates
-* Add CRM integration
-* Track customer support conversations
-
----
-
-##  Project Status
-
-**Status:** ✅ Completed
-
-**Project:** #8
-
-**Difficulty:** ⭐⭐⭐⭐⭐⭐
-
-**Category:** AI Automation / Customer Support / Lead Qualification
-
-**AI Provider:** Google Gemini
-
-**Email Automation:** Gmail
-
----
-
-##  Portfolio
-
-This project is part of my **n8n Automation Portfolio**, demonstrating practical experience building AI-powered automation workflows using Google Gemini, Gmail, webhooks, and automated customer communication.
+The workflow can be extended with additional steps such as **ticket classification, order verification, escalation to human agents, FAQ lookup, or customer database integration**.
