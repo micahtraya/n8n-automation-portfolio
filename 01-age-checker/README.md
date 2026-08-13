@@ -1,241 +1,160 @@
-#  Project 1 — Age Checker Automation ⭐⭐⭐⭐⭐⭐
+# Project 1 — Age Verification
 
-A simple n8n webhook automation that receives a user's information and checks whether they meet a specified age requirement.
+An **n8n workflow** that performs a simple age verification check using data received through a Webhook.
 
-This project demonstrates a foundational real-world automation scenario involving webhook integration, conditional logic, data routing, and automated webhook responses.
+The workflow checks whether the submitted age is **18 or older** and routes the request through either an **Allowed** or **Not Allowed** branch before returning a response through the Webhook.
 
----
+## Workflow
 
-##  Workflow
+```text
+Webhook
+   │
+   ▼
+IF: Age >= 18?
+   ├── True  ──► Allowed ────────┐
+   │                             │
+   └── False ─► Not Allowed ────┤
+                                 ▼
+                         Respond to Webhook
+```
 
-Webhook → IF → Allowed / Not Allowed → Respond to Webhook
+<img width="1166" height="606" alt="1" src="https://github.com/user-attachments/assets/0cc6d312-901e-468a-a1f1-d042bca609b0" />
 
----
 
-##  Objective
-
-The goal of this project is to build a simple age verification automation.
-
-The workflow receives a user's information through a webhook, checks whether the user's age is **18 or older** using an IF node, routes the request to either the **Allowed** or **Not Allowed** path, and then returns the appropriate result through the Respond to Webhook node.
-
-This demonstrates how conditional logic can be used to make decisions inside an n8n automation workflow.
-
----
-
-##  Input
-
-The workflow receives the user's information through a **Webhook** using a `POST` request.
-
-### Example Input
-
-    {
-      "name": "John",
-      "age": 15
-    }
-
----
-
-##  Age Verification Logic
-
-The **IF** node checks whether the user's age meets the required age of 18.
-
-### ✅ Allowed
-
-Users who are **18 or older** follow the Allowed path.
-
-    Age ≥ 18
-       ↓
-    Allowed
-
-### ❌ Not Allowed
-
-Users who are **under 18** follow the Not Allowed path.
-
-    Age < 18
-       ↓
-    Not Allowed
-
----
-
-##  Output
-
-For this test, the user's age was **15**, so the workflow followed the **Not Allowed** path.
-
-### Example Output
-
-    [
-      {
-        "status": "Not Allowed",
-        "message": "You are not eligible."
-      }
-    ]
-
-### Verification Result
-
-    Age: 15
-    Status: ❌ Not Allowed
-    Message: You are not eligible.
-
----
-
-##  How It Works
+## n8n Workflow Nodes
 
 ### 1. Webhook
 
-Receives the user's information.
+The workflow starts with a **Webhook** node that receives the incoming request.
 
-    {
-      "name": "John",
-      "age": 15
-    }
+### 2. IF: Age >= 18
 
-### 2. IF Node
+The submitted age is evaluated using the condition:
 
-Checks whether the user's age is **18 or older**.
+```text
+Age >= 18
+```
 
-### 3. Allowed Path
+The workflow has two possible paths:
 
-If the condition is true, the request is sent to the Allowed path.
+* **True** → `Allowed`
+* **False** → `Not Allowed`
 
-    Age ≥ 18
-       ↓
-    Allowed
+### 3. Allowed
 
-### 4. Not Allowed Path
+If the submitted age is **18 or older**, the request follows the **Allowed** branch.
 
-If the condition is false, the request is sent to the Not Allowed path.
+### 4. Not Allowed
 
-    Age < 18
-       ↓
-    Not Allowed
+If the submitted age is **below 18**, the request follows the **Not Allowed** branch.
 
 ### 5. Respond to Webhook
 
-Returns the appropriate result after the age verification is completed.
+Both branches connect to the **Respond to Webhook** node, which returns the workflow response.
 
 ---
 
-##  Testing
+## Input
 
-The workflow can be tested using **Postman**.
+The workflow receives the following input through the Webhook:
+
+```json
+{
+  "body": {
+    "name": "John",
+    "age": 15
+  }
+}
+```
+
+## Age Verification Logic
+
+For the provided input:
+
+```text
+Age = 15
+```
+
+The condition is:
+
+```text
+15 >= 18
+```
+
+This evaluates to:
+
+```text
+false
+```
+
+Therefore, the workflow follows the:
+
+```text
+Not Allowed
+```
+
+branch.
+
+## Output
+
+The output for the provided example is:
+
+```json
+[
+  {
+    "name": "John",
+    "age": 15
+  }
+]
+```
+
+## Workflow Summary
+
+| Step | Node               | Purpose                                       |
+| ---- | ------------------ | --------------------------------------------- |
+| 1    | Webhook            | Receives the user's name and age              |
+| 2    | IF: Age >= 18      | Checks whether the age is at least 18         |
+| 3    | Allowed            | Handles requests where the condition is true  |
+| 4    | Not Allowed        | Handles requests where the condition is false |
+| 5    | Respond to Webhook | Returns the workflow response                 |
+
+## Example
 
 ### Request
 
-**Method:**
+```json
+{
+  "body": {
+    "name": "John",
+    "age": 15
+  }
+}
+```
 
-    POST
+### Result
 
-### Example Body
+Since John's age is **15**, the condition `Age >= 18` is false, so the workflow follows the **Not Allowed** path.
 
-    {
-      "name": "John",
-      "age": 15
-    }
+### Response
 
-### Expected Process
+```json
+[
+  {
+    "name": "John",
+    "age": 15
+  }
+]
+```
 
-    Postman
-       ↓
-    Webhook
-       ↓
-    IF
-       ├── ✅ Allowed
-       │
-       └── ❌ Not Allowed
-              ↓
-       Respond to Webhook
+## Technologies Used
 
-### Test Result
+* **n8n**
+* **Webhook**
+* **IF Node**
+* **Respond to Webhook**
 
-    Age: 15
-       ↓
-    IF Node
-       ↓
-    ❌ Not Allowed
-       ↓
-    "You are not eligible."
+## Project Purpose
 
----
+This project demonstrates a basic **conditional workflow in n8n**, using webhook input and an age-based decision to route data through different workflow branches.
 
-##  Workflow Screenshot
-
-<img width="1166" height="606" alt="1" src="https://github.com/user-attachments/assets/35f063a7-572e-4fc3-80e5-2c1d6e267e79" />
-
-
----
-
-##  Technologies Used
-
-- **n8n** — Workflow automation
-- **Webhook** — Receives user information
-- **IF Node** — Conditional age verification
-- **Respond to Webhook** — Returns the result
-- **Postman** — API testing
-- **JSON** — Data format
-
----
-
-##  Example Use Cases
-
-This automation can be used for:
-
-- Age verification
-- Registration systems
-- Eligibility checking
-- Access control
-- User validation
-- Webhook-based validation
-- API request validation
-- Membership eligibility
-
----
-
-##  Skills Demonstrated
-
-This project demonstrates experience with:
-
-- n8n workflow automation
-- Creating webhook endpoints
-- Receiving JSON data
-- Using expressions in n8n
-- Building conditional logic
-- IF node configuration
-- Routing data based on conditions
-- Webhook response handling
-- API testing with Postman
-- Building simple API-based automations
-
----
-
-##  Future Improvements
-
-Possible improvements for future versions:
-
-- Add date-of-birth validation
-- Add customizable age requirements
-- Add validation for missing age values
-- Add validation for invalid age values
-- Add custom responses for allowed users
-- Connect the workflow to a database
-- Add logging for verification attempts
-- Add error handling
-
----
-
-##  Project Status
-
-**Status:** ✅ Completed
-
-**Project:** #1
-
-**Difficulty:** ⭐
-
-**Category:** Webhook Automation / Conditional Logic
-
-**Automation Type:** Age Verification
-
----
-
-##  Portfolio
-
-This project is part of my **n8n Automation Portfolio**, demonstrating practical experience building webhook-based automation workflows using conditional logic, JSON data processing, API testing, and automated webhook responses.
+It is a simple example of how n8n can be used to build **automation workflows, conditional logic, and webhook-based processes**.
