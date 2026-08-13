@@ -1,165 +1,154 @@
-#  Project 10 — Intelligent Lead Qualification & Email Automation ⭐⭐⭐⭐⭐⭐⭐
+# Project 10 — Client-Style Automation Challenge
 
-A client-style n8n automation workflow that uses **Google Gemini AI** to analyze incoming leads, classify them as **Hot, Warm, or Cold**, route them through different workflow paths, merge the results, and automatically send a personalized email response.
+A complete **n8n client-style automation workflow** that uses AI to analyze an incoming business inquiry, classify the lead, generate a personalized response, send an email, and record the lead information in a spreadsheet.
 
-This project demonstrates a more advanced real-world business automation scenario involving AI decision-making, conditional routing, data transformation, merging, and automated customer communication.
+This workflow simulates a real-world automation project for a digital agency handling incoming website-service inquiries.
 
----
+## Workflow
 
-##  Workflow
-
-```text id="h1w6j3"
+```text id="q8m2vx"
 Webhook
    │
    ▼
 Edit Fields
    │
    ▼
-Gemini AI
+Message a Model
    │
    ▼
 Edit Fields
    │
    ▼
 Switch
-   │
-   ├── 🔥 Hot ──────┐
-   │                │
-   ├── 🟡 Warm ─────┤
-   │                │
-   └── ❄️ Cold ─────┘
-                    │
-                    ▼
-                  Merge
-                    │
-                    ▼
-                  Gmail
-                    │
-                    ▼
-            Respond to Webhook
+   ├── Hot ──────►
+   ├── Warm ─────► Merge ──► Send a message ──► Append row in sheet ──► Respond to Webhook
+   └── Cold ─────►
 ```
+<img width="853" height="522" alt="10" src="https://github.com/user-attachments/assets/8a4bdcb2-ccd2-4cf4-80c0-f5c6db8766e0" />
 
-###  Workflow Screenshot
+<img width="1086" height="377" alt="10a" src="https://github.com/user-attachments/assets/56c76d4b-aea9-4984-96af-871ee2935503" />
 
-<img width="844" height="529" alt="image" src="https://github.com/user-attachments/assets/0f7688f8-5afb-4a81-80ae-e1feb42b2bd1" />
+<img width="1355" height="262" alt="10b" src="https://github.com/user-attachments/assets/e3e2a004-ebb5-4efa-be41-07f26b83a3c7" />
 
+
+## n8n Workflow Nodes
+
+### 1. Webhook
+
+The workflow begins with a **Webhook** that receives information from a potential client.
+
+The incoming request contains:
+
+* Client name
+* Email address
+* Company name
+* Client message
+
+### 2. Edit Fields
+
+The first **Edit Fields** node prepares the incoming client information for AI processing.
+
+### 3. Message a Model
+
+The **Message a Model** node uses AI to analyze the client's inquiry.
+
+The AI evaluates the client's message and generates relevant information, including:
+
+* Lead type
+* Priority
+* Personalized AI response
+
+### 4. Edit Fields
+
+A second **Edit Fields** node prepares the AI-generated information for the routing and response stages.
+
+### 5. Switch
+
+The **Switch** node categorizes the lead based on the AI-generated lead type.
+
+The workflow contains three routing paths:
+
+* **Hot**
+* **Warm**
+* **Cold**
+
+Each lead category is routed through the workflow before being combined again.
+
+### 6. Merge
+
+The **Merge** node combines the routed data back into a single workflow path.
+
+This allows the different lead categories to continue through the same email and data-recording process.
+
+### 7. Send a Message
+
+The workflow uses **Gmail** to send the AI-generated response to the potential client.
+
+This provides an automated and personalized follow-up based on the client's inquiry.
+
+### 8. Append Row in Sheet
+
+The processed lead information is recorded in **Google Sheets**.
+
+This creates a structured record of the client, their company, inquiry, lead classification, priority, AI response, and email address.
+
+### 9. Respond to Webhook
+
+The workflow finishes by returning the processed client information through the **Respond to Webhook** node.
 
 ---
 
-##  Objective
+## Input
 
-The goal of this project is to simulate a real-world client automation system for handling potential customers.
+The workflow receives the following input through the Webhook:
 
-The workflow receives a customer inquiry, uses Google Gemini to analyze the lead, determines whether the lead is **Hot, Warm, or Cold**, routes the lead through the appropriate path using a Switch node, and then sends a personalized response through Gmail.
-
-This demonstrates how AI can make business decisions inside an automated workflow.
-
----
-
-##  Input
-
-The workflow receives customer information through a **Webhook** using a `POST` request.
-
-### Example Input
-
-```json id="cx0s80"
+```json id="3z0p7s"
 {
-  "name": "Sarah",
-  "email": "baceromicah@gmail.com",
-  "company": "Sarah's Boutique",
-  "message": "Hi, I'm interested in your website design service. I'm comparing a few agencies right now and would like to know your pricing and what's included."
+  "body": {
+    "name": "Sarah",
+    "email": "baceromicah@gmail.com",
+    "company": "Sarah's Boutique",
+    "message": "Hi, I'm interested in your website design service. I'm comparing a few agencies right now and would like to know your pricing and what's included."
+  }
 }
 ```
 
----
+## AI Lead Analysis
 
-##  AI Processing
+For the provided input:
 
-The Google Gemini node analyzes the customer's inquiry and determines:
-
-* Lead Type
-* Priority
-* Recommended Response
-
-The lead is classified into one of three categories:
-
-```text id="w0u0dg"
-🔥 Hot
-🟡 Warm
-❄️ Cold
+```text id="7y1v9c"
+Name    = Sarah
+Company = Sarah's Boutique
+Email   = baceromicah@gmail.com
 ```
 
-The AI also generates a personalized response that can be sent directly to the customer.
+The client is actively researching website design services and is comparing different agencies.
 
----
+The AI classifies the inquiry as:
 
-##  Lead Routing
-
-After Gemini analyzes the lead, the **Switch** node determines which path the lead should follow.
-
-### 🔥 Hot Lead
-
-High-potential customers who show strong buying intent.
-
-```text id="xujw3c"
-Hot
- ↓
-Hot Lead Path
+```text id="c5d8kn"
+Lead Type = Warm
+Priority  = Medium
 ```
 
-### 🟡 Warm Lead
+The workflow therefore routes the lead through the **Warm** branch of the Switch node.
 
-Potential customers who are interested but may still be comparing options or gathering information.
+## AI-Generated Response
 
-```text id="2v1j4n"
-Warm
- ↓
-Warm Lead Path
+The AI generates a personalized response based on Sarah's inquiry:
+
+```text id="6k2w1m"
+Hi Sarah, thank you for reaching out to BrightWeb Digital Agency! We would love to help Sarah's Boutique stand out with a professional, high-converting website. Our design packages typically include custom UI/UX design, mobile responsiveness, basic SEO setup, and a user-friendly content management system. Since we tailor our services to each client's specific goals, I'd love to schedule a brief 15-minute discovery call to learn more about your vision so I can provide you with an accurate quote and a detailed breakdown of our deliverables. Are you available for a chat later this week?
 ```
 
-### ❄️ Cold Lead
+The generated response is then sent to the client's email address.
 
-Customers who show little immediate buying intent.
+## Output
 
-```text id="x9r4c5"
-Cold
- ↓
-Cold Lead Path
-```
+The provided workflow execution produced:
 
----
-
-##  Merge
-
-After the different lead paths are processed, the **Merge** node combines the results back into a single workflow path.
-
-```text id="j5k6u1"
-🔥 Hot ──────┐
-             │
-🟡 Warm ─────┼──→ Merge
-             │
-❄️ Cold ─────┘
-```
-
-This allows all lead types to continue to the same Gmail automation step.
-
----
-
-##  Gmail Automation
-
-After the lead has been classified and processed, Gmail automatically sends the AI-generated response to the customer.
-
-This allows the business to respond to potential customers without manually writing every email.
-
----
-
-##  Output
-
-For this test, Gemini classified the lead as a **Warm** lead with **Medium** priority.
-
-### Example Output
-
-```json id="ukv3ur"
+```json id="1j7w5r"
 [
   {
     "Name": "Sarah",
@@ -173,211 +162,114 @@ For this test, Gemini classified the lead as a **Warm** lead with **Medium** pri
 ]
 ```
 
-### Lead Result
+## Lead Routing
 
-```text id="8r9v6t"
-Lead Type: 🟡 Warm
-Priority: Medium
-Email: Sent ✅
-```
+The workflow uses the following lead categories:
 
----
+| Lead Type | Switch Branch | Purpose                                                      |
+| --------- | ------------- | ------------------------------------------------------------ |
+| **Hot**   | Hot           | High-interest leads requiring strong follow-up               |
+| **Warm**  | Warm          | Potential customers who are actively considering the service |
+| **Cold**  | Cold          | Lower-interest leads requiring less immediate attention      |
 
-##  How It Works
+The example inquiry is classified as **Warm** with **Medium** priority.
 
-### 1. Webhook
-
-Receives the customer's information.
-
-```json id="5z5g3p"
-{
-  "name": "Sarah",
-  "email": "baceromicah@gmail.com",
-  "company": "Sarah's Boutique",
-  "message": "Hi, I'm interested in your website design service. I'm comparing a few agencies right now and would like to know your pricing and what's included."
-}
-```
-
-### 2. Edit Fields
-
-Prepares and organizes the incoming customer information.
-
-### 3. Gemini AI
-
-Analyzes the customer's message and determines:
-
-* Lead type
-* Priority
-* AI-generated response
-
-### 4. Edit Fields
-
-Formats the AI output into a consistent structure that can be used by the routing and email steps.
-
-### 5. Switch
-
-Routes the lead based on the AI-generated lead type:
-
-```text id="n8v3tq"
-🔥 Hot
-🟡 Warm
-❄️ Cold
-```
-
-### 6. Merge
-
-Combines the different lead paths back into one workflow.
-
-### 7. Gmail
-
-Sends the personalized AI-generated response to the customer.
-
-### 8. Respond to Webhook
-
-Returns the processed result after the automation is completed.
-
----
-
-##  Testing
-
-The workflow can be tested using **Postman**.
+## Example
 
 ### Request
 
-**Method:**
-
-```text id="o9rjcs"
-POST
-```
-
-### Example Body
-
-```json id="fyx2m2"
+```json id="7x0n4q"
 {
-  "name": "Sarah",
-  "email": "baceromicah@gmail.com",
-  "company": "Sarah's Boutique",
-  "message": "Hi, I'm interested in your website design service. I'm comparing a few agencies right now and would like to know your pricing and what's included."
+  "body": {
+    "name": "Sarah",
+    "email": "baceromicah@gmail.com",
+    "company": "Sarah's Boutique",
+    "message": "Hi, I'm interested in your website design service. I'm comparing a few agencies right now and would like to know your pricing and what's included."
+  }
 }
 ```
 
-### Expected Process
+### Processing
 
-```text id="c6z2u7"
-Postman
-   ↓
+```text id="2r5v9k"
 Webhook
-   ↓
-Edit Fields
-   ↓
-Gemini AI
-   ↓
-Edit Fields
-   ↓
-Switch
-   ├── 🔥 Hot
-   ├── 🟡 Warm
-   └── ❄️ Cold
-          ↓
-        Merge
-          ↓
-        Gmail
-          ↓
-    Email Sent ✅
-          ↓
- Respond to Webhook
+    ↓
+Prepare Client Data
+    ↓
+AI Lead Analysis
+    ↓
+Lead Type: Warm
+    ↓
+Priority: Medium
+    ↓
+Warm Branch
+    ↓
+Merge
+    ↓
+Send Personalized Email
+    ↓
+Record Lead in Google Sheets
+    ↓
+Return Result
 ```
 
----
+### Response
 
-##  Technologies Used
+```json id="8h3p1z"
+[
+  {
+    "Name": "Sarah",
+    "Company": "Sarah's Boutique",
+    "Message": "Hi, I'm interested in your website design service. I'm comparing a few agencies right now and would like to know your pricing and what's included.",
+    "Lead Type": "Warm",
+    "Priority": "Medium",
+    "AI Response": "Hi Sarah, thank you for reaching out to BrightWeb Digital Agency! We would love to help Sarah's Boutique stand out with a professional, high-converting website. Our design packages typically include custom UI/UX design, mobile responsiveness, basic SEO setup, and a user-friendly content management system. Since we tailor our services to each client's specific goals, I'd love to schedule a brief 15-minute discovery call to learn more about your vision so I can provide you with an accurate quote and a detailed breakdown of our deliverables. Are you available for a chat later this week?",
+    "Email": "baceromicah@gmail.com"
+  }
+]
+```
 
-* **n8n** — Workflow automation
-* **Google Gemini** — AI lead analysis
-* **Switch** — Conditional lead routing
-* **Merge** — Combines workflow branches
-* **Gmail** — Automated email communication
-* **Webhook** — Receives customer inquiries
-* **Edit Fields** — Data preparation and formatting
-* **Postman** — API testing
-* **JSON** — Data format
+## Workflow Summary
 
----
+| Step | Node                | Purpose                                  |
+| ---- | ------------------- | ---------------------------------------- |
+| 1    | Webhook             | Receives the client inquiry              |
+| 2    | Edit Fields         | Prepares the incoming client data        |
+| 3    | Message a Model     | Analyzes and qualifies the lead using AI |
+| 4    | Edit Fields         | Prepares the AI-generated information    |
+| 5    | Switch              | Routes the lead as Hot, Warm, or Cold    |
+| 6    | Merge               | Combines the different lead paths        |
+| 7    | Send a Message      | Sends the personalized AI response       |
+| 8    | Append Row in Sheet | Records the lead information             |
+| 9    | Respond to Webhook  | Returns the final processed lead         |
 
-##  Example Use Cases
+## Technologies Used
 
-This automation can be used for:
+* **n8n**
+* **Webhook**
+* **Edit Fields**
+* **AI Model**
+* **Switch**
+* **Merge**
+* **Gmail**
+* **Google Sheets**
+* **Respond to Webhook**
 
-* Sales lead qualification
-* Website agency inquiries
-* Service-based businesses
-* Customer support
-* Automated sales responses
-* Lead nurturing
-* CRM automation
-* E-commerce businesses
-* Digital marketing agencies
-* AI-powered sales assistants
+## Project Purpose
 
----
+This project demonstrates a **real-world, client-style business automation workflow** built with n8n.
 
-##  Skills Demonstrated
+It combines **AI lead qualification, conditional routing, automated email communication, and lead tracking** into one workflow.
 
-This project demonstrates experience with:
+The automation can help a digital agency process incoming inquiries by:
 
-* n8n workflow automation
-* Google Gemini integration
-* AI lead qualification
-* AI prompt engineering
-* Conditional workflow routing
-* Switch node logic
-* Merge node logic
-* Gmail automation
-* Webhook integration
-* Dynamic data mapping
-* JSON data handling
-* Automated customer communication
-* API testing with Postman
-* Multi-branch workflow design
-* Client-style automation architecture
+1. Capturing potential clients through a Webhook.
+2. Using AI to understand and qualify each inquiry.
+3. Assigning a **Hot, Warm, or Cold** lead type.
+4. Determining the lead's priority.
+5. Generating a personalized response.
+6. Automatically emailing the potential client.
+7. Recording the lead in Google Sheets.
+8. Returning the complete processed lead information.
 
----
-
-##  Future Improvements
-
-Possible improvements for future versions:
-
-* Add different email templates for Hot, Warm, and Cold leads
-* Send Hot leads directly to a sales representative
-* Add Slack or Discord notifications for Hot leads
-* Store all leads in Google Sheets or Airtable
-* Add automatic lead scoring from 1–100
-* Add CRM integration
-* Schedule automatic follow-up emails
-* Add a human approval step for high-value leads
-* Add calendar booking links for Hot leads
-* Create an automated lead nurturing sequence
-
----
-
-##  Project Status
-
-**Status:** ✅ Completed
-
-**Project:** #10
-
-**Difficulty:** ⭐⭐⭐⭐⭐⭐⭐
-
-**Category:** AI Automation / Lead Qualification / Sales Automation
-
-**AI Provider:** Google Gemini
-
-**Email Automation:** Gmail
-
-**Workflow Type:** Multi-Branch Client-Style Automation
-
----
-
-##  Portfolio
-
-This project is part of my **n8n Automation Portfolio**, demonstrating practical experience building client-style AI automation systems using Google Gemini, conditional routing, data processing, Gmail, webhooks, and multi-branch workflows.
+This project demonstrates how multiple automation services can be connected into a single **end-to-end AI-powered business workflow**.
