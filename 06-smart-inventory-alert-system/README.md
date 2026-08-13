@@ -1,90 +1,244 @@
-# Project 6 - Smart Inventory Alert System ⭐⭐⭐⭐⭐⭐
+# Project 6 — Smart Inventory Alert System
 
-## Overview
+An **n8n workflow** that monitors product inventory and automatically sends an alert when stock reaches a defined low-stock threshold.
 
-A webhook-based n8n automation that receives inventory information and automatically processes low-stock items to trigger an inventory alert.
-
-The workflow can help businesses monitor stock levels and notify the appropriate person when a product needs to be reordered.
+The workflow receives inventory information through a **Webhook**, checks whether the current stock is **10 or below**, and routes the request accordingly. When stock is low, the workflow records the alert in **Google Sheets** and sends a notification through **Gmail**.
 
 ## Workflow
 
-**Webhook → Inventory Check → Gmail Notification**
+```text id="x8v2kd"
+Webhook
+   │
+   ▼
+Edit Fields
+   │
+   ▼
+IF: Stock <= 10?
+   ├── True ──► Respond "Low Stock"
+   │                  │
+   │                  ▼
+   │            Google Sheets
+   │           "Low Stock Recorded"
+   │                  │
+   │                  ▼
+   │              Gmail
+   │          Send a message
+   │                  │
+   │                  ▼
+   │         Respond to Webhook
+   │
+   └── False ─► Respond "Stock OK"
+                     │
+                     ▼
+              Respond to Webhook
+```
+<img width="885" height="533" alt="6" src="https://github.com/user-attachments/assets/06ccc494-a8dc-4da1-a82b-8d3333efd8a6" />
 
-## How It Works
+<img width="1040" height="499" alt="6b" src="https://github.com/user-attachments/assets/261e4285-f0bf-4294-a210-6828ccafb508" />
 
-1. The Webhook receives product inventory information.
-2. The automation processes the product name, current stock, and supplier.
-3. The inventory level is evaluated using the configured stock condition.
-4. When the product requires attention, an automated email notification is sent.
-5. Gmail processes the notification and returns the email message information.
+<img width="550" height="357" alt="6a" src="https://github.com/user-attachments/assets/53fa9721-08c1-4265-9015-f346c070ac7b" />
+
+
+## n8n Workflow Nodes
+
+### 1. Webhook
+
+The workflow starts with a **Webhook** node that receives the inventory information.
+
+The incoming request contains:
+
+* Product name
+* Current stock
+* Supplier
+
+### 2. Edit Fields
+
+The **Edit Fields** node prepares the inventory information for the stock-level condition.
+
+### 3. IF: Stock <= 10?
+
+The workflow checks whether the current stock is **10 or below**.
+
+* **True** → Low-stock alert process
+* **False** → Stock OK
+
+### 4. Respond "Low Stock"
+
+When the stock level is 10 or below, the workflow generates a **Low Stock** response before continuing with the alert process.
+
+### 5. Google Sheets — "Low Stock Recorded"
+
+The low-stock information is recorded in **Google Sheets** using the append operation.
+
+This provides a record of products that have reached the low-stock threshold.
+
+### 6. Gmail — Send a Message
+
+After recording the low-stock alert, the workflow uses **Gmail** to send a notification.
+
+This allows the supplier or responsible team to be notified when inventory needs attention.
+
+### 7. Respond "Stock OK"
+
+If the stock level is greater than 10, the workflow follows the **Stock OK** branch.
+
+No low-stock alert is sent.
+
+### 8. Respond to Webhook
+
+The workflow ends by returning a response through the **Respond to Webhook** node.
+
+---
 
 ## Input
 
-```json id="fxe1tb"
+The workflow receives the following inventory information:
+
+```json id="wq0v1h"
 {
-  "Product": "Keyboard",
-  "Stock": 10,
-  "Supplier": "Razer"
+  "body": {
+    "Product": "Keyboard",
+    "Stock": 10,
+    "Supplier": "Razer"
+  },
+  "webhookUrl": "http://localhost:5678/webhook-test/Smart_Inventory_Alert_System",
+  "executionMode": "test"
 }
 ```
+
+## Stock Alert Logic
+
+For the provided input:
+
+```text id="6d2m8v"
+Product  = Keyboard
+Stock    = 10
+Supplier = Razer
+```
+
+The workflow evaluates:
+
+```text id="b9p5q2"
+10 <= 10
+```
+
+This condition evaluates to **true**.
+
+Therefore, the workflow follows the:
+
+```text id="2y8h4n"
+Low Stock
+```
+
+branch.
+
+The workflow then:
+
+1. Records the low-stock event in Google Sheets.
+2. Sends a notification using Gmail.
+3. Responds through the Webhook.
+
+## Stock Rules
+
+| Stock Level     | Result          |
+| --------------- | --------------- |
+| **10 or below** | Low Stock Alert |
+| **Above 10**    | Stock OK        |
 
 ## Output
 
-```json id="7f1p6h"
-{
-  "id": "19fd7dc16c22c9b6",
-  "threadId": "19fd7dc16c22c9b6",
-  "labelIds": [
-    "UNREAD",
-    "SENT",
-    "INBOX"
-  ]
-}
+The provided workflow execution produced the following output:
+
+```json id="q5c7z1"
+[
+  {
+    "id": "19fd7dc16c22c9b6",
+    "threadId": "19fd7dc16c22c9b6",
+    "labelIds": [
+      "UNREAD",
+      "SENT",
+      "INBOX"
+    ]
+  }
+]
 ```
+
+The returned fields represent the Gmail message information generated by the notification step.
 
 ## Example
 
-**Product:** Keyboard
-**Stock Remaining:** 10
-**Supplier:** Razer
+### Request
 
-The automation processes the inventory information and sends an automated Gmail notification when the configured stock condition is met.
+```json id="4m6x8p"
+{
+  "body": {
+    "Product": "Keyboard",
+    "Stock": 10,
+    "Supplier": "Razer"
+  },
+  "webhookUrl": "http://localhost:5678/webhook-test/Smart_Inventory_Alert_System",
+  "executionMode": "test"
+}
+```
 
-## Use Case
+### Result
 
-This automation can be useful for:
+The product has **10 units in stock**.
 
-* Warehouses
-* Retail businesses
-* E-commerce stores
-* Inventory management teams
-* Purchasing departments
+Because the workflow condition is:
 
-It can reduce the need for manually checking inventory and help businesses respond more quickly when stock levels require attention.
+```text id="q0w7es"
+Stock <= 10
+```
 
-## Tools
+the condition is satisfied and the workflow triggers the **Low Stock** process.
 
-* n8n
-* Webhook
-* Inventory Logic
-* Gmail
-* JSON
+The low-stock event is recorded in Google Sheets, followed by a Gmail notification.
 
-## What I Learned
+### Response
 
-* Receiving inventory data through a webhook
-* Processing structured JSON data
-* Building automated inventory checks
-* Creating conditional notification workflows
-* Connecting n8n with Gmail
-* Sending automated email alerts
-* Working with Gmail message responses
+```json id="p2k9r4"
+[
+  {
+    "id": "19fd7dc16c22c9b6",
+    "threadId": "19fd7dc16c22c9b6",
+    "labelIds": [
+      "UNREAD",
+      "SENT",
+      "INBOX"
+    ]
+  }
+]
+```
 
-##  Workflow Screenshot
+## Workflow Summary
 
-<img width="852" height="530" alt="image" src="https://github.com/user-attachments/assets/f840e90d-22df-4451-b62d-1fcf65c014ec" />
+| Step | Node                | Purpose                        |
+| ---- | ------------------- | ------------------------------ |
+| 1    | Webhook             | Receives inventory information |
+| 2    | Edit Fields         | Prepares the inventory data    |
+| 3    | IF: Stock <= 10?    | Checks the stock level         |
+| 4    | Respond "Low Stock" | Initiates the low-stock path   |
+| 5    | Google Sheets       | Records the low-stock event    |
+| 6    | Gmail               | Sends the inventory alert      |
+| 7    | Respond "Stock OK"  | Handles sufficient inventory   |
+| 8    | Respond to Webhook  | Returns the workflow response  |
 
+## Technologies Used
 
-## Project Status
+* **n8n**
+* **Webhook**
+* **Edit Fields**
+* **IF Node**
+* **Google Sheets**
+* **Gmail**
+* **Conditional Routing**
+* **Respond to Webhook**
 
-✅ Completed and tested
+## Project Purpose
+
+This project demonstrates how **n8n can automate inventory monitoring and alerting**.
+
+By defining a low-stock threshold, the workflow can automatically detect products that need attention, record the event in **Google Sheets**, and notify the appropriate person through **Gmail**.
+
+This reduces the need for manual inventory checking and provides a simple automated process for handling low-stock products.
