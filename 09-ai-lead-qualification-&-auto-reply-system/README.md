@@ -1,109 +1,109 @@
-#  Project 9 — AI Lead Qualification & Auto-Reply System ⭐⭐⭐⭐⭐⭐
+# Project 9 — AI Lead Qualification System
 
-An n8n automation workflow that uses **Google Gemini AI** to analyze potential customer inquiries, determine the lead type and priority, store the lead information in **Google Sheets**, and automatically send a response through **Gmail**.
+An **n8n workflow** that uses AI to process and qualify potential business leads, record the lead information, and send an automated email response.
 
-This project demonstrates how AI can be combined with data storage and email automation to create an automated lead qualification system.
+The workflow receives lead information through a **Webhook**, prepares the data, uses an AI model to evaluate the lead, records the result in **Google Sheets**, and sends a message through **Gmail**.
 
----
-
-##  Workflow
+## Workflow
 
 ```text
-Customer submits inquiry
-        │
-        ▼
-     Webhook
-        │
-        ▼
-   Edit Fields
-        │
-        ▼
-    Gemini AI
-        │
-        ▼
- AI analyzes lead
- • Lead Type
- • Priority
- • Recommended Response
-        │
-        ▼
-  Google Sheets
-        │
-        ▼
-     Gmail
-        │
-        ▼
-Respond to customer
+Webhook
+   │
+   ▼
+Edit Fields
+   │
+   ▼
+Message a Model
+   │
+   ▼
+Append row in sheet
+   │
+   ▼
+Send a message
+   │
+   ▼
+Respond to Webhook
 ```
+<img width="862" height="526" alt="9" src="https://github.com/user-attachments/assets/d54d6f42-1cbf-4bd1-91c1-43aabec83729" />
+<img width="1099" height="351" alt="9a" src="https://github.com/user-attachments/assets/7c35db44-fa5e-4cb5-a8a0-bdeabf3ed4db" />
+<img width="1363" height="300" alt="9b" src="https://github.com/user-attachments/assets/2b8c7a20-f26d-4970-8c31-582cd8d152ed" />
 
-### 📸 Workflow Screenshot
+## n8n Workflow Nodes
 
-<img width="829" height="523" alt="image" src="https://github.com/user-attachments/assets/73d0d792-ad4f-4dbf-9c68-8ed59cbad56f" />
+### 1. Webhook
+
+The workflow starts with a **Webhook** node that receives information about a potential lead.
+
+The incoming request contains:
+
+* Lead name
+* Email address
+* Company name
+* Message or inquiry
+
+### 2. Edit Fields
+
+The **Edit Fields** node prepares the incoming lead information before it is passed to the AI model.
+
+### 3. Message a Model
+
+The **Message a Model** node uses AI to analyze the lead's inquiry.
+
+The AI can evaluate the intent of the potential customer and determine whether the inquiry represents a potential business opportunity.
+
+### 4. Append row in sheet
+
+After the AI processes the lead, the workflow uses **Google Sheets** to append the lead information to a spreadsheet.
+
+This creates a centralized record of incoming leads and their qualification results.
+
+### 5. Send a Message
+
+The workflow uses **Gmail** to send an automated message based on the processed lead information.
+
+This allows potential customers to receive a response without requiring the lead to be handled manually.
+
+### 6. Respond to Webhook
+
+The workflow finishes by returning the execution result through the **Respond to Webhook** node.
 
 ---
 
-##  Objective
+## Input
 
-The goal of this project is to automatically qualify potential customers and respond to their inquiries using AI.
-
-Instead of manually reviewing every incoming lead, the workflow uses Google Gemini to analyze the customer's message, determine the lead type and priority, save the lead information to Google Sheets, and automatically send a personalized response through Gmail.
-
----
-
-##  Input
-
-The workflow receives customer information through a **Webhook** using a `POST` request.
-
-### Example Input
+The workflow receives the following input through the Webhook:
 
 ```json
 {
-  "name": "John",
-  "email": "baceromicah@gmail.com",
-  "company": "John's Store",
-  "message": "Hello, I was just curious about what kind of website services your company offers. Maybe I'll need one someday."
+  "body": {
+    "name": "John",
+    "email": "baceromicah@gmail.com",
+    "company": "John's Store",
+    "message": "Hello, I was just curious about what kind of website services your company offers. Maybe I'll need one someday."
+  }
 }
 ```
 
----
+## Lead Processing
 
-##  AI Processing
-
-The Google Gemini node analyzes the customer's inquiry and determines:
-
-* Lead Type
-* Priority
-* Recommended Response
-
-The AI evaluates the customer's message to determine how valuable or urgent the lead may be and generates an appropriate response.
-
----
-
-##  Google Sheets
-
-After Gemini processes the inquiry, the lead information is stored in **Google Sheets**.
-
-The spreadsheet can be used as a simple lead database for tracking potential customers.
-
-Example information stored:
+For the provided input:
 
 ```text
-Name
-Email
-Company
-Message
-Lead Type
-Priority
-AI Response
+Name    = John
+Email   = baceromicah@gmail.com
+Company = John's Store
+Message = Hello, I was just curious about what kind of website services your company offers. Maybe I'll need one someday.
 ```
 
----
+The lead information is passed to the AI model for analysis.
 
-##  Output
+The inquiry shows that the potential customer is **asking about website services** and may require a website in the future.
 
-After the lead is analyzed and stored, Gmail automatically sends the AI-generated response to the customer.
+The workflow then continues by recording the lead information in Google Sheets and sending a message through Gmail.
 
-### Gmail Output
+## Output
+
+The provided workflow execution produced the following output:
 
 ```json
 [
@@ -117,185 +117,68 @@ After the lead is analyzed and stored, Gmail automatically sends the AI-generate
 ]
 ```
 
-The `SENT` label confirms that Gmail successfully sent the automated response.
+The output confirms that the Gmail message was successfully sent.
 
----
-
-##  Technologies Used
-
-* **n8n** — Workflow automation
-* **Google Gemini** — AI lead analysis and response generation
-* **Google Sheets** — Lead database
-* **Gmail** — Automated customer communication
-* **Webhook** — Receives customer inquiries
-* **Edit Fields** — Data preparation and mapping
-* **Postman** — API testing
-* **JSON** — Data format
-
----
-
-##  How It Works
-
-### 1. Webhook
-
-The Webhook receives the potential customer's information.
-
-```json
-{
-  "name": "John",
-  "email": "baceromicah@gmail.com",
-  "company": "John's Store",
-  "message": "Hello, I was just curious about what kind of website services your company offers. Maybe I'll need one someday."
-}
-```
-
-### 2. Edit Fields
-
-The customer information is organized and prepared for Gemini.
-
-### 3. Gemini AI
-
-Gemini analyzes the customer's inquiry and determines the lead type, priority, and recommended response.
-
-### 4. Google Sheets
-
-The lead information and AI-generated analysis are saved to Google Sheets.
-
-### 5. Gmail
-
-The AI-generated response is automatically sent to the customer's email address.
-
-### 6. Respond to Webhook
-
-The workflow completes the automation and returns the result of the request.
-
----
-
-##  Testing
-
-The workflow can be tested using **Postman**.
+## Example
 
 ### Request
 
-**Method:**
-
-```text
-POST
-```
-
-### Example Body
-
 ```json
 {
-  "name": "John",
-  "email": "baceromicah@gmail.com",
-  "company": "John's Store",
-  "message": "Hello, I was just curious about what kind of website services your company offers. Maybe I'll need one someday."
+  "body": {
+    "name": "John",
+    "email": "baceromicah@gmail.com",
+    "company": "John's Store",
+    "message": "Hello, I was just curious about what kind of website services your company offers. Maybe I'll need one someday."
+  }
 }
 ```
 
-### Expected Process
+### Result
 
-```text
-Postman
-   ↓
-Webhook
-   ↓
-Edit Fields
-   ↓
-Gemini AI
-   ↓
-Google Sheets
-   ↓
-Gmail
-   ↓
-Email Sent ✅
-```
+The workflow receives John's inquiry and sends the information to the AI model for processing.
 
-### Gmail Result
+The lead is then recorded in Google Sheets, followed by an automated email response.
+
+### Response
 
 ```json
-{
-  "labelIds": [
-    "SENT"
-  ]
-}
+[
+  {
+    "id": "19fec01fcd2f2d6f",
+    "threadId": "19fec01fcd2f2d6f",
+    "labelIds": [
+      "SENT"
+    ]
+  }
+]
 ```
 
----
+## Workflow Summary
 
-##  Example Use Cases
+| Step | Node                | Purpose                               |
+| ---- | ------------------- | ------------------------------------- |
+| 1    | Webhook             | Receives potential lead information   |
+| 2    | Edit Fields         | Prepares the lead data                |
+| 3    | Message a Model     | Uses AI to analyze the lead           |
+| 4    | Append row in sheet | Records the lead in Google Sheets     |
+| 5    | Send a message      | Sends an automated email              |
+| 6    | Respond to Webhook  | Returns the workflow execution result |
 
-This automation can be used for:
+## Technologies Used
 
-* Lead qualification
-* Website service inquiries
-* Sales automation
-* Customer inquiry management
-* Automated email responses
-* CRM lead management
-* E-commerce businesses
-* Service-based businesses
-* AI-powered sales assistants
-* Customer follow-up automation
+* **n8n**
+* **Webhook**
+* **Edit Fields**
+* **AI Model**
+* **Google Sheets**
+* **Gmail**
+* **Respond to Webhook**
 
----
+## Project Purpose
 
-##  Skills Demonstrated
+This project demonstrates how **AI can be integrated into a lead qualification and follow-up workflow**.
 
-This project demonstrates experience with:
+Instead of manually reviewing every incoming inquiry, the workflow can use AI to understand the potential customer's intent, store the lead information in **Google Sheets**, and automatically send a follow-up message through **Gmail**.
 
-* n8n workflow automation
-* Google Gemini integration
-* Google Sheets integration
-* Gmail automation
-* Webhook integration
-* AI lead qualification
-* AI prompt engineering
-* Dynamic data mapping
-* JSON data handling
-* Automated email communication
-* Lead database management
-* API testing with Postman
-* Multi-step AI workflow design
-
----
-
-##  Future Improvements
-
-Possible improvements for future versions:
-
-* Add lead scoring from 1–100
-* Send hot leads to Slack or Discord
-* Add automatic follow-up emails
-* Create a CRM integration
-* Add different email templates based on lead priority
-* Notify sales teams about high-priority leads
-* Add lead status tracking
-* Generate personalized sales proposals
-* Add calendar booking automation
-* Create automated lead nurturing sequences
-
----
-
-##  Project Status
-
-**Status:** ✅ Completed
-
-**Project:** #9
-
-**Difficulty:** ⭐⭐⭐⭐⭐⭐
-
-**Category:** AI Automation / Lead Qualification / Sales Automation
-
-**AI Provider:** Google Gemini
-
-**Database:** Google Sheets
-
-**Email Automation:** Gmail
-
----
-
-## 👨‍💻 Portfolio
-
-This project is part of my **n8n Automation Portfolio**, demonstrating practical experience building AI-powered lead qualification and customer communication systems using Google Gemini, Google Sheets, Gmail, and webhooks.
+This creates a simple automated pipeline for capturing, analyzing, recording, and responding to potential business leads.
